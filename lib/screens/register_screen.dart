@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:auth_app_simple/screens/user_home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'login_screen.dart';
+import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -12,33 +13,37 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final auth = FirebaseAuth.instance;
 
-  Future<void> register() async {
+  void register() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential = await auth.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Registro exitoso')));
+
+      await FirebaseFirestore.instance
+          .collection('usuarios')
+          .doc(credential.user!.uid)
+          .set({'email': emailController.text.trim(), 'rol': 'user'});
+
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
+        MaterialPageRoute(builder: (_) => const UserHomeScreen()),
       );
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Error al registrar: $e')));
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registrar')),
+      appBar: AppBar(title: const Text('Registro')),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
@@ -51,7 +56,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               decoration: const InputDecoration(labelText: 'Password'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: register, child: const Text('Registrar')),
+            ElevatedButton(
+              onPressed: register,
+              child: const Text('Registrarse'),
+            ),
           ],
         ),
       ),

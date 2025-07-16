@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "768170962921",
+    "project_id": "authfluttersimple",
+    "storage_bucket": "authfluttersimple.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768170962921:android:feff16e3d69797e5ace578",
+        "android_client_info": {
+          "package_name": "com.example.auth_app_simple"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYeybMqUSV07nnQ2OnYJxI-j47wiN4538"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

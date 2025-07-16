@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+
 import 'firebase_options.dart';
-import 'screens/auth_gate.dart';
+import 'screens/splash_screen.dart'; // 👈 usamos splash ahora
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,9 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      title: 'Auth App',
       debugShowCheckedModeBanner: false,
-      home: AuthGate(),
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      home: const SplashScreen(), // 👈 ahora inicia aquí
     );
   }
 }
